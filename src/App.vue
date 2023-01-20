@@ -61,6 +61,8 @@ export default {
   },
   beforeMount() {
     this.$store.state.isTransparent = "bg-transparent";
+    console.log(this.$store.loadLanguages);
+    console.log(this.$store.languages);
   },
 };
 </script>

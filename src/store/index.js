@@ -1,3 +1,4 @@
+import { ref } from 'vue';
 import { createStore } from "vuex";
 import bootstrap from "bootstrap/dist/js/bootstrap.min.js";
 
@@ -10,6 +11,9 @@ import {
   faGithub,
 } from "@fortawesome/free-brands-svg-icons";
 
+import LanguagesApi from '../api/resources/Languages.js';
+//import Frameworks from '../api/resources/Frameworks.js';
+
 export default createStore({
   data() {
     faFacebook,
@@ -17,7 +21,8 @@ export default createStore({
     faInstagram,
     faLinkedinIn,
     faMastodon,
-    faGithub
+    faGithub,
+    LanguagesApi
   },
   state: {
     hideConfigButton: false,
@@ -37,6 +42,7 @@ export default createStore({
       "position-sticky blur shadow-blur left-auto top-1 z-index-sticky px-0 mx-4",
     absolute: "position-absolute px-4 mx-0 w-100 z-index-2",
     bootstrap,
+    frameworks: [],
     socials: [
       {
         name: 'LinkedIn',
@@ -111,7 +117,16 @@ export default createStore({
       commit("cardBackground", payload);
     },
   },
+  setup() {
+    const languages = ref({});
+    const loadLanguages = async() => {
+      languages.value = await LanguagesApi.index();
+    };
+    return {
+      languages,
+      loadLanguages,
+    }
+  },
   getters: {
-    getSocials(social) { return this.socials[social] }
   },
 });
