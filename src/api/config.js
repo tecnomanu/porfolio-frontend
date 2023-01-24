@@ -1,7 +1,8 @@
+const token = '023582ae18f5fc2e968855f9ef7dd535de02fe5b2a2420ff3d8e1da7284af09f4ba57e561c3b383a55da2a8e8b9820096c3e1bb8a90a5b53feb9ee3370cf6905d6da4e35759e2915c94b51f53b5f7646a9d033a1c0e93356a3307a7282b32c1fe9caf015cbe7596c4477fb834faae389aa288c8f7175b0259d3c9e1e931d4674';
 export const APISettings = {
-    token: '9a86fc99330625bac7aaaf3b7e9176dd159fae36497c1f96a6a6d2683bdf34b794fbc038bd826fa22855e46be4adf2bb5fc0970f49e8631a1e187774a507ce146d8ac0d99adab11b2f2830b9a72b0a4f3a90f596d29046e2fe44a649b63fc7b4cfd917e23b8101690412a9d204152c85594744fed16bd20e608f31bcd9b5e40d',
     headers: new Headers({
-        'Accept': 'application/json'
+        'Accept': 'application/json',
+        'Authorization': 'Bearer '+ token,
     }),
-    baseURL: 'https://localhost:1337/api/',
+    baseURL: 'http://localhost:1337',
 }

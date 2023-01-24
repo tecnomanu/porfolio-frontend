@@ -21,17 +21,14 @@
               <th></th>
             </tr>
           </thead>
-          <tbody>
+          <tbody v-if="!skills || skills.length === 0">
+            <tr><td colspan="2" class="text-center">Loading...</td></tr>
+          </tbody>
+          <tbody v-else>
             <tr v-for="skill in skills" v-bind:key="skill._id">
               <td>
                 <div class="d-flex px-2">
                   <div style="font-size: 1.3rem; margin-right: 7px">
-                    <!-- <font-awesome-icon :icon="faLaravel" /> -->
-                    <!-- <img
-                      src="../../assets/img/small-logos/logo-invision.svg"
-                      class="avatar avatar-sm rounded-circle me-2"
-                      alt="spotify"
-                    /> -->
                     <span class="timeline-step2" :class="darkMode ? 'bg-dark' : ''">
                       <i class="devicon text-gradient" :class="`devicon-${skill.icon} text-${skill.color}`"></i>
                     </span>
@@ -43,12 +40,12 @@
               </td>
               <td class="align-middle text-center">
                 <div class="d-flex align-items-center justify-content-center">
-                  <span class="me-2 text-xs font-weight-bold">{{skill.percent}}%</span>
+                  <span class="me-2 text-xs font-weight-bold">{{skill.knowledge}}%</span>
                   <div>
                     <soft-progress
                       :color="skill.color"
                       variant="gradient"
-                      :percentage="skill.percent"
+                      :percentage="+skill.knowledge"
                     />
                   </div>
                 </div>
@@ -84,19 +81,12 @@ export default {
   data() {
     return {
       faLaravel,
-      skills: [
-        {name: "Laravel", color: 'danger', icon: 'laravel-plain', percent: '95'},
-        {name: "Angular", color: 'danger', icon: 'angularjs-plain', percent: '95'},
-        {name: "NestJs", color: 'danger', icon: 'nestjs-plain', percent: '80'},
-        {name: "NodeJs", color: 'success', icon: 'nodejs-plain', percent: '80'},
-        {name: "VueJs", color: 'success', icon: 'vuejs-plain', percent: '75'},
-        {name: "React", color: 'info', icon: 'react-original', percent: '25'},
-        {name: "SocketIO", color: 'dark', icon: 'socketio-original', percent: '65'},
-        {name: "MongoDB", color: 'success', icon: 'mongodb-plain', percent: '90'},
-        {name: "PostgresSQL", color: 'info', icon: 'postgresql-plain', percent: '90'},
-        {name: "Docker", color: 'info', icon: 'docker-plain', percent: '90'},
-      ]
     };
   },
+  computed: {
+    skills() {
+      return this.$store.state.frameworks;
+    }
+  }
 };
 </script>

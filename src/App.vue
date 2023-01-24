@@ -36,7 +36,7 @@ import Sidenav from "./examples/Sidenav";
 import Configurator from "@/examples/Configurator.vue";
 import Navbar from "@/examples/Navbars/Navbar.vue";
 import AppFooter from "@/examples/Footer.vue";
-import { mapMutations } from "vuex";
+import { mapActions, mapMutations } from "vuex";
 export default {
   name: "App",
   components: {
@@ -46,7 +46,8 @@ export default {
     AppFooter,
   },
   methods: {
-    ...mapMutations(["toggleConfigurator", "navbarMinimize"]),
+    ...mapMutations(["toggleConfigurator", "navbarMinimize", "setFrameworks"]),
+    ...mapActions(["setFrameworks", "setPortfolios"]),
   },
   computed: {
     navClasses() {
@@ -59,10 +60,12 @@ export default {
       };
     },
   },
+  mounted() {
+    this.setFrameworks()
+    this.setPortfolios()
+  },
   beforeMount() {
     this.$store.state.isTransparent = "bg-transparent";
-    console.log(this.$store.loadLanguages);
-    console.log(this.$store.languages);
   },
 };
 </script>

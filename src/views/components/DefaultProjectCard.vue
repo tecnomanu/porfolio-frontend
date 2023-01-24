@@ -1,5 +1,5 @@
 <template>
-  <div class="mb-4 col-xl-3 col-md-6 mb-xl-0">
+  <div class="mb-4 col-xl-4 col-md-6 mb-xl-0">
     <div class="card card-blog card-plain">
       <div class="position-relative">
         <a class="shadow-xl d-block border-radius-xl">
@@ -19,22 +19,22 @@
           {{ description }}
         </p>
         <div class="d-flex align-items-center justify-content-between">
-          <button
+          <a :href="`/portfolios/${action.route}`"
             type="button"
             class="mb-0 btn btn-sm"
             :class="`btn-outline-${action.color}`"
           >
             {{ action.label }}
-          </button>
+          </a>
           <div class="mt-2 avatar-group2">
             <a
-              v-for="({ image: authorImage, name }, index) of authors"
+              v-for="({ image:img, name }, index) of frameworks"
               :key="index"
               href="javascript:;"
               class="avatar dev-icon with-tooltip"
               :title="name"
             >
-              <img :alt="authorImage" :src="authorImage" />
+              <img :alt="img" :src="require(`@/assets/img/small-logos/${img}`)" />
             </a>
           </div>
         </div>
@@ -70,7 +70,7 @@ export default {
       label: String,
       default: () => {},
     },
-    authors: {
+    frameworks: {
       type: Array,
       image: String,
       name: String,

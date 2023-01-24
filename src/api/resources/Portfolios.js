@@ -1,9 +1,11 @@
 import { APISettings } from "../config";
-const place = "frameworks";
+const place = "portfolios";
+
+const query = "?populate[thumbnail][fields][0]=url&populate=frameworks"
 const apiUrl = APISettings.baseURL + "/api/";
 export default {
     async find( ) {
-        return fetch( apiUrl + place, {
+        return fetch( apiUrl + place + query, {
             method: 'GET',
             headers: APISettings.headers
         } )
@@ -17,7 +19,7 @@ export default {
     },
 
     async getById( id ){
-        return fetch( `${apiUrl + place}/${id}`, {
+        return fetch( `${apiUrl + place}/${id}${query}`, {
             method: 'GET',
             headers: APISettings.headers
         } )

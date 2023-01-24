@@ -1,4 +1,4 @@
-import { ref } from 'vue';
+// import { ref } from 'vue';
 import { createStore } from "vuex";
 import bootstrap from "bootstrap/dist/js/bootstrap.min.js";
 
@@ -11,8 +11,9 @@ import {
   faGithub,
 } from "@fortawesome/free-brands-svg-icons";
 
-import LanguagesApi from '../api/resources/Languages.js';
-//import Frameworks from '../api/resources/Frameworks.js';
+import PortfoliosApi from '../api/resources/Portfolios.js';
+import FrameworksApi from '../api/resources/Frameworks.js';
+import { APISettings } from "../api/config";
 
 export default createStore({
   data() {
@@ -22,9 +23,10 @@ export default createStore({
     faLinkedinIn,
     faMastodon,
     faGithub,
-    LanguagesApi
+    FrameworksApi
   },
   state: {
+    apiBase: APISettings.baseURL,
     hideConfigButton: false,
     isPinned: true,
     showConfig: false,
@@ -43,6 +45,7 @@ export default createStore({
     absolute: "position-absolute px-4 mx-0 w-100 z-index-2",
     bootstrap,
     frameworks: [],
+    portfolios: [],
     socials: [
       {
         name: 'LinkedIn',
@@ -108,6 +111,14 @@ export default createStore({
     toggleHideConfig(state) {
       state.hideConfigButton = !state.hideConfigButton;
     },
+    setFrameworks(state, payload) {
+      const values = { ...payload.map((value) => value.attributes)}
+      state.frameworks = values;
+    },
+    setPortfolios(state, payload) {
+      const values = { ...payload.map((value) => value.attributes)}
+      state.portfolios = values;
+    },
   },
   actions: {
     toggleSidebarColor({ commit }, payload) {
@@ -116,17 +127,16 @@ export default createStore({
     setCardBackground({ commit }, payload) {
       commit("cardBackground", payload);
     },
-  },
-  setup() {
-    const languages = ref({});
-    const loadLanguages = async() => {
-      languages.value = await LanguagesApi.index();
-    };
-    return {
-      languages,
-      loadLanguages,
-    }
+    async setFrameworks({ commit }) {
+      const { data } = await FrameworksApi.find();
+      commit("setFrameworks", data);
+    },
+    async setPortfolios({ commit }) {
+      const { data } = await PortfoliosApi.find();
+      commit("setPortfolios", data);
+    },
   },
   getters: {
+    getFrameworks: (state) => state.frameworks,
   },
 });

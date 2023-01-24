@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Profile from "@/views/Profile.vue";
 import Dashboard from "@/views/Dashboard.vue";
+import PortfolioView from "@/views/PortfolioView.vue";
 
 const routes = [
   {
@@ -14,9 +15,15 @@ const routes = [
     component: Profile,
   },
   {
-    path: "/portfolio",
+    path: "/portfolios",
     name: "Portfolio",
     component: Profile,
+    children: [
+      {
+        path: ":slug",
+        component: PortfolioView
+      }
+    ]
   },
   {
     path: "/blog",

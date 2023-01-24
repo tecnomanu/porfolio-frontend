@@ -214,33 +214,24 @@
           <div class="mb-4 card">
             <div class="p-3 pb-0 card-header">
               <h6 class="mb-1">Projects</h6>
-              <p class="text-sm">These are my last projects, you can see all in the <router-link to="/portfolio">Portfolio</router-link> section.</p>
+              <p class="text-sm">These are my latest projects, you can see them all in the <router-link to="/portfolio">Portfolio</router-link> section.</p>
             </div>
             <div class="p-3 card-body">
               <div class="row">
                 <default-project-card
-                  title="Minimalist"
-                  :image="img3"
-                  label="Project #3"
-                  description="Different people have different taste, and various types
-                        of music."
-                  :authors="[
-                    {
-                      image: logoAngularjs,
-                      name: 'AngularJs',
-                    },
-                    {
-                      image: logoLaravel,
-                      name: 'Laravel',
-                    },
-                    {
-                      image: logoMongodb,
-                      name: 'MongoDB',
-                    },
-                  ]"
+                  v-for="project of this.$store.state.portfolios"
+                  v-bind:key="project._id"
+                  :title="project.title"
+                  :image="this.$store.state.apiBase + project.thumbnail.data.attributes.url"
+                  :label="project.label"
+                  :description="project.brief"
+                  :frameworks="project.frameworks.data.map((f) =>{
+                    return f.attributes
+                  })"
                   :action="{
                     color: 'success',
                     label: 'View Project',
+                    route: project.slug
                   }"
                 />
               </div>
@@ -255,19 +246,6 @@
 <script>
 import ProfileInfoCard from "./components/ProfileInfoCard.vue";
 import ProfileActionContact from "./components/ProfileActionContact.vue";
-//import SoftAvatar from "@/components/SoftAvatar.vue";
-import sophie from "@/assets/img/kal-visuals-square.jpg";
-import marie from "@/assets/img/marie.jpg";
-import ivana from "@/assets/img/ivana-square.jpg";
-import peterson from "@/assets/img/team-4.jpg";
-import nick from "@/assets/img/team-3.jpg";
-import img1 from "@/assets/img/home-decor-1.jpg";
-import img2 from "@/assets/img/home-decor-2.jpg";
-import img3 from "@/assets/img/home-decor-3.jpg";
-import logoAngularjs from "@/assets/img/small-logos/logo-angularjs.svg";
-import logoLaravel from "@/assets/img/small-logos/logo-laravel.svg";
-import logoNestjs from "@/assets/img/small-logos/logo-nestjs.svg";
-import logoMongodb from "@/assets/img/small-logos/logo-mongodb.svg";
 import DefaultProjectCard from "./components/DefaultProjectCard.vue";
 import SkillsTable from "./components/SkillsTable.vue";
 import setNavPills from "@/assets/js/nav-pills.js";
@@ -278,28 +256,14 @@ export default {
   components: {
     ProfileInfoCard,
     ProfileActionContact,
-    //SoftAvatar,
     SkillsTable,
     DefaultProjectCard,
   },
   data() {
     return {
       showMenu: false,
-      sophie,
-      marie,
-      ivana,
-      peterson,
-      nick,
-      img1,
-      logoAngularjs,
-      logoLaravel,
-      logoNestjs,
-      logoMongodb,
-      img2,
-      img3,
     };
   },
-
   mounted() {
     this.$store.state.isAbsolute = true;
     setNavPills();

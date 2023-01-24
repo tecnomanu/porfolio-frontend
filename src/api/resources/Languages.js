@@ -1,9 +1,9 @@
 import { APISettings } from "../config";
 const place = "languages";
-
+const apiUrl = APISettings.baseURL + "/api/";
 export default {
     async find( ){
-        return fetch( APISettings.baseURL + place, {
+        return fetch( apiUrl + place, {
             method: 'GET',
             headers: APISettings.headers
         } )
@@ -17,7 +17,7 @@ export default {
     },
 
     async getById( id ){
-        return fetch( `${APISettings.baseURL + place}/${id}`, {
+        return fetch( `${apiUrl + place}/${id}`, {
             method: 'GET',
             headers: APISettings.headers
         } )
